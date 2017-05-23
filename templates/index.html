@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LED control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/own.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slider.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/prettify.css') }}">
+  </head>
+  <body>
+    <div class = container>
+    <h3 class="text-center">LED Light Strip Control</h3>
+      <div>
+        <button type="button" id="On" class="btn btn-danger btn-block">On</button>
+      </div>
+    <p></p>
+    <div id="Toggle">
+      <div>
+        <button type="button" id="Off" class="btn btn-black btn-block">Off</button>
+      </div>
+      <div>
+        <button type="button" id="Up" class="btn btn-default btn-fifty">Up</button>
+        <button type="button" id="Down" class="btn btn-default btn-fifty">Down</button>
+      </div>
+      <div class="ownWell">
+        <b>Brightness</b>
+        <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128"  data-slider-id="Brightness" id="Brightness" >
+      </div>
+      <div>
+        <button type="button" id="Red" class="btn btn-danger btn-twenf">Red</button>
+        <button type="button" id="Green" class="btn btn-success btn-twenf">Green</button>
+        <button type="button" id="Blue" class="btn btn-primary btn-twenf">Blue</button>
+        <button type="button" id="White" class="btn btn-default btn-twenf">White</button>
+      </div>
+      <div class="ownWell">
+        <p>
+        <b>R</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="RC" id="R" data-slider-tooltip="hide" data-slider-handle="square" >
+        </p>
+        <p>
+        <b>G</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="GC" id="G" data-slider-tooltip="hide" data-slider-handle="round" >
+        </p>
+        <p>
+        <b>B</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="BC" id="B" data-slider-tooltip="hide" data-slider-handle="triangle" >
+        </p>
+        <div id="RGB"></div>
+      </div>
+    </div>
+
+        <script src="{{ url_for('static', filename='js/google-code-prettify/prettify.js') }}"></script>
+        <script src= "{{ url_for('static', filename='js/modernizr.js') }}"></script>
+        <script src= "{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script src= "{{ url_for('static', filename='js/bootstrap-slider.js') }}"></script>
+        <script>window.jQuery || document.write('<script src= "js/jquery.min.js"><\/script>')</script>
+        <script>
+          $(document).ready(function() {
+
+            $('#Toggle').toggle();
+
+            $('#On').click(function() {
+              $.post('/onoff/on');
+              $('#Toggle').toggle();
+            });
+
+            $('#Off').click(function() {
+              $.post('/onoff/off');
+              $('#Toggle').toggle();
+            });
+
+            $('#Up').click(function() {
+              $.post('/brightness/updown/up');
+            });
+
+            $('#Down').click(function() {
+              $.post('/brightness/updown/down');
+            });
+
+            $('#Red').click(function() {
+              $.post('/colors/red');
+            });
+
+            $('#Green').click(function() {
+              $.post('/colors/green');
+            });
+
+            $('#Blue').click(function() {
+              $.post('/colors/blue');
+            });
+
+            $('#White').click(function() {
+              $.post('/colors/white');
+            });
+
+            $('#Flash').click(function() {
+              $.post('/effects/flash');
+            });
+
+            $('#Strobe').click(function() {
+              $.post('/effects/strobe');
+            });
+
+            $('#Fade').click(function() {
+              $.post('/effects/fade');
+            });
+
+            $('#Smooth').click(function() {
+              $.post('/effects/smooth');
+            });
+
+          });
+          $(function(){
+               window.prettyPrint && prettyPrint();
+
+              var BrightnessChange = function() {
+                $.post('/brightness/user/?B='+brightness.getValue()+'')
+                $('#R').slider('setValue', brightness.getValue())
+                $('#G').slider('setValue', brightness.getValue())
+                $('#B').slider('setValue', brightness.getValue())
+              };
+
+              var brightness = $('#Brightness').slider()
+                                                .on('slide', BrightnessChange)
+                                                .data('slider');
+
+                var RGBChange = function() {
+                  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
+                  $.post('/colors/user/?R='+r.getValue()+'&G='+g.getValue()+'&B='+b.getValue()+'')
+                  };
+
+                var r = $('#R').slider()
+                               .on('slide', RGBChange)
+                               .data('slider');
+
+                var g = $('#G').slider()
+                               .on('slide', RGBChange)
+                               .data('slider');
+
+                var b = $('#B').slider()
+                               .on('slide', RGBChange)
+                               .data('slider');
+                             });
+        </script>
+  </body>
+</html>

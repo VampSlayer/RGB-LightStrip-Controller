@@ -1,0 +1,68 @@
+.btn-black {
+  color: #fff;
+  background-color: #333;
+  border-color: #333
+}
+
+.btn-fifty {
+  width: 49%;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.btn-twenf {
+  width: 24%;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+
+#Brightness .slider-handle {
+    background:  black;
+  }
+
+#Brightness .slider-selection {
+    background:  #000000;
+  }
+
+  #RGB {
+    height: 20px;
+    background: rgb(128, 128, 128);
+  }
+
+  #RC .slider-selection {
+    background: #FF8282;
+  }
+
+  #RC .slider-handle {
+    background: red;
+  }
+
+  #GC .slider-selection {
+    background: #428041;
+  }
+
+  #GC .slider-handle {
+    background: green;
+  }
+  #BC .slider-selection {
+    background: #8283FF;
+  }
+
+  #BC .slider-handle {
+    border-bottom-color: blue;
+  }
+
+  #R, #G, #B {
+    width: 300px;
+  }
+
+  #eg .slider-selection {
+    background: #BABABA;
+  }
+  .ownWell {
+  min-height: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color:#fff;
+  }
