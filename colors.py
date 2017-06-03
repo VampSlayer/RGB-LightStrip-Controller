@@ -17,7 +17,4 @@ class colors(object):
         set_PWM.setAllPWN(0, 0, 255)
 
     def user(self, blue, red, green):
-        pi.set_PWM_dutycycle(BLUE_PIN, blue)
-        pi.set_PWM_dutycycle(RED_PIN, red)
-        pi.set_PWM_dutycycle(GREEN_PIN, green)
         set_PWM.setAllPWN(blue, red, green)

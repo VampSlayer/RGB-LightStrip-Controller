@@ -1,14 +1,14 @@
 import getsetPWM
 
 set_PWM = getsetPWM.setPWN()
-get_PWM = getsetPWM.getPWM()
+get_PWM = getsetPWM.getPWN()
 
 class brightness(object):
 
     def up(self):
-        blue = get_PWM.getBluePWN
-        red = get_PWM.getRedPWN
-        green = get_PWM.getGreenPWN
+        blue = get_PWM.getBluePWN()
+        red = get_PWM.getRedPWN()
+        green = get_PWM.getGreenPWN()
 
         new_blue = blue + 1
         new_red = red + 1
@@ -26,9 +26,9 @@ class brightness(object):
         set_PWM.setAllPWN(new_blue, new_red, new_green)
 
     def down(self):
-        blue = get_PWM.getBluePWN
-        red = get_PWM.getRedPWN
-        green = get_PWM.getGreenPWN
+        blue = get_PWM.getBluePWN()
+        red = get_PWM.getRedPWN()
+        green = get_PWM.getGreenPWN()
 
         new_blue = blue - 1
         new_red = red - 1
