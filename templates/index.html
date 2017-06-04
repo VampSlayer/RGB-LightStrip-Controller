@@ -47,6 +47,12 @@
         </p>
         <div id="RGB"></div>
       </div>
+      <div>
+        <button type="button" id="Smooth" class="btn btn-default btn-twenf">Smooth</button>
+	<button type="button" id="Fade" class="btn btn-default btn-twenf">Fade</button>
+	<button type="button" id="Strobe" class="btn btn-default btn-twenf">Strobe</button>
+	<button type="button" id="Flash" class="btn btn-default btn-twenf">Flash</button>
+      </div>
     </div>
 
         <script src="{{ url_for('static', filename='js/google-code-prettify/prettify.js') }}"></script>
@@ -115,9 +121,6 @@
 
               var BrightnessChange = function() {
                 $.post('/brightness/user/?B='+brightness.getValue()+'')
-                $('#R').slider('setValue', brightness.getValue())
-                $('#G').slider('setValue', brightness.getValue())
-                $('#B').slider('setValue', brightness.getValue())
               };
 
               var brightness = $('#Brightness').slider()

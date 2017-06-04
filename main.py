@@ -2,10 +2,12 @@ from flask import *
 import onoff
 import colors
 import brightness
+import effects
 
 onoff = onoff.onoff()
 colors = colors.colors()
 brightness = brightness.brightness()
+effects = effects.effects()
 
 #Create flask app
 app = Flask(__name__, template_folder='templates')
@@ -63,10 +65,10 @@ def white():
     return ('', 204)
 
 @app.route("/brightness/user/", methods=['POST'])
-def brightness():
-    brightness = int(request.args.get('B'))
-    print 'LEDs USER BRIGHTNESS : [{0}]'.format(brightness)
-    colors.user(brightness, brightness, brightness)
+def userBrightness():
+    userBrightness = int(request.args.get('B'))
+    print 'LEDs USER BRIGHTNESS : [{0}]'.format(userBrightness)
+    brightness.user(userBrightness)
     return ('', 204)
 
 @app.route("/colors/user/", methods=['POST'])
@@ -76,6 +78,30 @@ def color():
     green = int(request.args.get('G'))
     print 'LEDs USER COLORS. RED : [{0}] GREEN : [{1}] BLUE : [{2}]'.format(red, green, blue)
     colors.user(blue, red, green)
+    return ('', 204)
+
+@app.route("/effects/smooth", methods=['POST'])
+def smooth():
+    print 'LEDs SMOOTH'
+    effects.smooth()
+    return ('', 204)
+
+@app.route("/effects/fade", methods=['POST'])
+def fade():
+    print 'LEDs FADE'
+    effects.fade()
+    return ('', 204)
+
+@app.route("/effects/strobe", methods=['POST'])
+def strobe():
+    print 'LEDs STROBE'
+    effects.strobe()
+    return ('', 204)
+
+@app.route("/effects/flash", methods=['POST'])
+def flash():
+    print 'LEDs Flash'
+    effects.flashcolors()
     return ('', 204)
 
 @app.route("/js/index.js", methods=['GET'])
