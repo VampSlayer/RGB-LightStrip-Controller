@@ -4,7 +4,7 @@ pi = pigpio.pi()
 
 BLUE_PIN  = 24
 RED_PIN = 17
-GREEN_PIN  = 22
+GREEN_PIN  = 23
 LED_MAXIMUM = 255
 LED_MINIMUM = 0
 
@@ -28,7 +28,7 @@ class setPWN(object):
             print 'ERROR: Please enter integer number >=0 and <=255'
 
 	if(green >= LED_MINIMUM  and green <= LED_MAXIMUM):
-	    pi.set_PWM_dutycycle(RED_PIN, red)
+	    pi.set_PWM_dutycycle(GREEN_PIN, green)
         else:
 	    print 'ERROR: You entered for green : [{0}]'.format(green)
             print 'ERROR: Please enter integer number >=0 and <=255'

@@ -87,6 +87,9 @@ class effects(object):
             blue = self.checkMinimum(blue)
 	    green = self.checkMinimum(green)
             red = self.checkMinimum(red)
+
+	    time.sleep(timeSleep)
+	    print 'Loop'
 		
             # red decreases as green increase
             while red != 0 and green <= maximum:
@@ -98,7 +101,7 @@ class effects(object):
 		time.sleep(timeSleep)
 
             #green decrease as blue increases
-            while green != 0 and blue <= maximum:
+            while green != 0 and blue < maximum:
                 green = green - step
                 blue = blue + step
 		green = self.checkMinimum(green)
@@ -106,8 +109,8 @@ class effects(object):
                 set_PWM.setAllPWN(blue, red, green)
 		time.sleep(timeSleep)
 
-            # bring red and green back to max
-            while green <= maximum and red <= maximum:
+            # bring red and green back to max = white
+            while green < maximum and red < maximum:
                 red = red + step
                 green = green + step
 		red = self.checkMaximum(red)
@@ -123,7 +126,7 @@ class effects(object):
 		time.sleep(timeSleep)
 
             #increase blue as decrease red
-            while red != 0  and blue <= maximum:
+            while red != 0  and blue < maximum:
                 red = red - step
                 blue = blue + step
 		blue = self.checkMaximum(blue)
@@ -132,7 +135,7 @@ class effects(object):
 		time.sleep(timeSleep)
 
             #inccrease red as decrease green
-            while green != 0  and red <= maximum:
+            while green != 0  and red < maximum:
                 red = red + step
                 green = green - step
 		red = self.checkMaximum(red)
@@ -141,24 +144,20 @@ class effects(object):
 		time.sleep(timeSleep)
 
             #come back to white, so increase green
-            while green <= maximum:
+            while green < maximum:
                 green = green + step
 		green = self.checkMaximum(blue)
                 set_PWM.setAllPWN(blue, red, green)
 		time.sleep(timeSleep)
 
             # decrease blue and green, back to start for red
-            while green != 0 and blue != 0  and red <= maximum:
-                red = red + step
+            while green != 0 and blue != 0:
                 green = green - step
                 blue = blue - step
-		red = self.checkMaximum(red)
 		green = self.checkMinimum(green)
 		blue = self.checkMinimum(blue)
                 set_PWM.setAllPWN(blue, red, green)
 		time.sleep(timeSleep)
-
-	print 'Loop'
 
     def checkMaximum(self, value):
 	maximum = 255
