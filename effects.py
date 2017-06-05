@@ -53,31 +53,51 @@ class effects(object):
 	    time.sleep(timeSleep)
 
     def fade(self):
-        # goes incrementally from  white max to min then to max etc.
+        # goes incrementally from previous values to min then to max etc.
         step = 1
         maximum = 255
-        blue = maximum
-        red = maximum
-        green = maximum
 	timeSleep = 0.01
-        set_PWM.setAllPWN(blue, red, green)
+
+        blue = get_PWM.getBluePWN()
+        red = get_PWM.getRedPWN()
+        green = get_PWM.getGreenPWN()
+
+	rgb = [red, green, blue]
+	indexMax = rgb.index(max(rgb))
+	indexMin = rgb.index(min(rgb))
 
         var = 1
         while var == 1:
-            while blue != 0 and blue <= maximum:
-                blue = blue - step
-                red = red - step
-                green = green - step
+	    new_blue = blue
+	    new_red = red
+	    new_green = green
+	    maxValue = rgb[indexMax] 	
+
+            while maxValue != 0:
+		maxValue = maxValue - step
+                new_blue = new_blue - step
+                new_red = new_red - step
+                new_green = new_green - step
 		time.sleep(timeSleep)
-                set_PWM.setAllPWN(blue, red, green)
+		new_blue = brightnessCheck.checkMinimum(new_blue)
+		new_red = brightnessCheck.checkMinimum(new_red)
+		new_green = brightnessCheck.checkMinimum(new_green)
+                set_PWM.setAllPWN(new_blue, new_red, new_green)
 	    	get_PWM.printRGB()
 
-            while blue >= 0 and blue != maximum:
-                blue = blue + step
-                red = red + step
-                green = green + step
+            while maxValue != rgb[indexMax]: 
+		maxValue = maxValue + step
+		if blue != 0 and new_blue != blue: 
+		    new_blue = new_blue + step
+
+		if red != 0 and new_red != red:
+		    new_red = new_red + step
+
+		if green != 0 and new_green != green:
+		    new_green = new_green + step
+		
 		time.sleep(timeSleep)	
-                set_PWM.setAllPWN(blue, red, green)
+                set_PWM.setAllPWN(new_blue, new_red, new_green)
 	    	get_PWM.printRGB()
 
     def smooth(self):
