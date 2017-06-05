@@ -1,8 +1,10 @@
 import getsetPWM
 import time
+import brightnessCheck
 
 set_PWM = getsetPWM.setPWN()
 get_PWM = getsetPWM.getPWN()
+brightnessCheck = brightnessCheck.brightnessCheck()
 
 class effects(object):
 
@@ -12,18 +14,25 @@ class effects(object):
 	timeSleep = 0.4
         while var == 1:      # This constructs an infinite loop
             set_PWM.setAllPWN(255, 0, 0) #blue
+	    get_PWM.printRGB()
 	    time.sleep(timeSleep)
             set_PWM.setAllPWN(255, 255, 0) #purple
+	    get_PWM.printRGB()
             time.sleep(timeSleep)
             set_PWM.setAllPWN(0, 255, 0) #red
+	    get_PWM.printRGB()
 	    time.sleep(timeSleep)
             set_PWM.setAllPWN(0, 255, 255) #red+green
+	    get_PWM.printRGB()
             time.sleep(timeSleep)
             set_PWM.setAllPWN(0, 0, 255) #green
+	    get_PWM.printRGB()
 	    time.sleep(timeSleep)
             set_PWM.setAllPWN(255, 255, 255) #white
+	    get_PWM.printRGB()
             time.sleep(timeSleep)
             set_PWM.setAllPWN(255, 0, 255) #blue+green
+	    get_PWM.printRGB()
 	    time.sleep(timeSleep)
 
     def strobe(self):
@@ -37,8 +46,10 @@ class effects(object):
 	timeSleep = 0.4
         while var == 1:
             set_PWM.setAllPWN(0, 0, 0)
+	    get_PWM.printRGB()	
 	    time.sleep(timeSleep)
             set_PWM.setAllPWN(blue, red, green)
+	    get_PWM.printRGB()
 	    time.sleep(timeSleep)
 
     def fade(self):
@@ -59,6 +70,7 @@ class effects(object):
                 green = green - step
 		time.sleep(timeSleep)
                 set_PWM.setAllPWN(blue, red, green)
+	    	get_PWM.printRGB()
 
             while blue >= 0 and blue != maximum:
                 blue = blue + step
@@ -66,6 +78,7 @@ class effects(object):
                 green = green + step
 		time.sleep(timeSleep)	
                 set_PWM.setAllPWN(blue, red, green)
+	    	get_PWM.printRGB()
 
     def smooth(self):
         # is similar to fade but of all colors, but with a offset
@@ -80,95 +93,90 @@ class effects(object):
         var = 1
 	timeSleep = 0.01
         while var == 1:
-	    blue = self.checkMaximum(blue)
-	    red = self.checkMaximum(red)
-	    green = self.checkMaximum(green)
+	    blue = brightnessCheck.checkMaximum(blue)
+	    red = brightnessCheck.checkMaximum(red)
+	    green = brightnessCheck.checkMaximum(green)
 	
-            blue = self.checkMinimum(blue)
-	    green = self.checkMinimum(green)
-            red = self.checkMinimum(red)
+            blue = brightnessCheck.checkMinimum(blue)
+	    green = brightnessCheck.checkMinimum(green)
+            red = brightnessCheck.checkMinimum(red)
 
 	    time.sleep(timeSleep)
-	    print 'Loop'
+	    print 'Smooth Loop'
+            get_PWM.printRGB()
 		
             # red decreases as green increase
             while red != 0 and green <= maximum:
                 red = red - step
                 green = green + step
-		red = self.checkMaximum(red)
-		green = self.checkMinimum(green)
+		red = brightnessCheck.checkMaximum(red)
+		green = brightnessCheck.checkMinimum(green)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
 
             #green decrease as blue increases
             while green != 0 and blue < maximum:
                 green = green - step
                 blue = blue + step
-		green = self.checkMinimum(green)
-		blue = self.checkMaximum(blue)
+		green = brightnessCheck.checkMinimum(green)
+		blue = brightnessCheck.checkMaximum(blue)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
 
             # bring red and green back to max = white
             while green < maximum and red < maximum:
                 red = red + step
                 green = green + step
-		red = self.checkMaximum(red)
-		green = self.checkMaximum(green)
+		red = brightnessCheck.checkMaximum(red)
+		green = brightnessCheck.checkMaximum(green)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
 
             #decrease blue
             while blue != 0:
                 blue = blue - step
-		blue = self.checkMinimum(blue)
+		blue = brightnessCheck.checkMinimum(blue)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
 
             #increase blue as decrease red
             while red != 0  and blue < maximum:
                 red = red - step
                 blue = blue + step
-		blue = self.checkMaximum(blue)
-		red = self.checkMinimum(red)
+		blue = brightnessCheck.checkMaximum(blue)
+		red = brightnessCheck.checkMinimum(red)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
 
             #inccrease red as decrease green
             while green != 0  and red < maximum:
                 red = red + step
                 green = green - step
-		red = self.checkMaximum(red)
-		green = self.checkMinimum(green)
+		red = brightnessCheck.checkMaximum(red)
+		green = brightnessCheck.checkMinimum(green)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
 
             #come back to white, so increase green
             while green < maximum:
                 green = green + step
-		green = self.checkMaximum(blue)
+		green = brightnessCheck.checkMaximum(blue)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
 
             # decrease blue and green, back to start for red
             while green != 0 and blue != 0:
                 green = green - step
                 blue = blue - step
-		green = self.checkMinimum(green)
-		blue = self.checkMinimum(blue)
+		green = brightnessCheck.checkMinimum(green)
+		blue = brightnessCheck.checkMinimum(blue)
                 set_PWM.setAllPWN(blue, red, green)
+		get_PWM.printRGB()
 		time.sleep(timeSleep)
-
-    def checkMaximum(self, value):
-	maximum = 255
-	if(value > maximum):
-	   return maximum
-	else:
-	   return value	
-
-    def checkMinimum(self, value):
-	minimum = 0
-	if(value < minimum):
-	   return minimum
-	else:
-	   return value

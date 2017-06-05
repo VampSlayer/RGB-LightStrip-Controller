@@ -43,3 +43,6 @@ class getPWN(object):
 
     def getGreenPWN(self):
         return pi.get_PWM_dutycycle(GREEN_PIN)
+
+    def printRGB(self):
+	print 'INFO: Brightness changed to RED : [{0}] GREEN : [{1}] BLUE : [{2}]'.format(self.getRedPWN(), self.getGreenPWN(), self.getBluePWN())
